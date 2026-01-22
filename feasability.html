@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Feasibility — Local Jobs Marketplace</title>
+  <style>
+    :root{
+      --bg: #0b1220;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.10);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --line: rgba(255,255,255,0.14);
+      --accent: #79c0ff;
+      --shadow: 0 18px 45px rgba(0,0,0,0.35);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 12% 10%, rgba(121,192,255,0.18), transparent 60%),
+        radial-gradient(800px 520px at 90% 30%, rgba(168,255,207,0.12), transparent 55%),
+        radial-gradient(700px 520px at 50% 95%, rgba(121,192,255,0.10), transparent 55%),
+        var(--bg);
+      line-height: 1.55;
+    }
+
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .container{
+      width: min(980px, 92vw);
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    header{
+      padding: 26px 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .badge{
+      display:inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    h1{
+      margin: 0;
+      font-size: clamp(24px, 3.4vw, 34px);
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14.5px;
+      max-width: 85ch;
+    }
+
+    .quick{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+    }
+    .chip{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.12);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .chip strong{ color: var(--text); font-weight: 600; }
+
+    nav{
+      margin-top: 16px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+    }
+    nav .label{
+      margin: 0 0 10px 0;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    nav .links{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+    }
+    nav .links a{
+      display:inline-flex;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      font-size: 13px;
+      color: var(--text);
+    }
+    nav .links a:hover{
+      background: rgba(255,255,255,0.08);
+      text-decoration: none;
+    }
+
+    main{
+      margin-top: 18px;
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+
+    section{
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.26);
+      overflow: hidden;
+    }
+
+    .section-head{
+      display:flex;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .num{
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(121,192,255,0.22), rgba(255,255,255,0.05));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 700;
+    }
+
+    h2{
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: -0.01em;
+    }
+
+    .muted{ color: var(--muted); }
+
+    .section-body{
+      padding: 14px 18px 18px;
+    }
+
+    p{ margin: 10px 0; }
+    ul{ margin: 10px 0 0 18px; padding: 0; }
+    li{ margin: 7px 0; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (min-width: 860px){
+      .grid-2{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(0,0,0,0.10);
+    }
+    .card h3{
+      margin: 0 0 6px 0;
+      font-size: 14px;
+    }
+    .card p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .callout{
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px dashed rgba(121,192,255,0.40);
+      background: rgba(121,192,255,0.10);
+    }
+    .callout strong{ color: var(--accent); }
+
+    footer{
+      margin-top: 22px;
+      padding: 16px 6px 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      text-align:center;
+    }
+
+    .print{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      font-size: 13px;
+    }
+    .print:hover{ background: rgba(255,255,255,0.10); }
+
+    @media print{
+      body{ background: white; color: black; }
+      header, nav, section{ box-shadow: none; }
+      .print{ display:none; }
+      header, nav, section{ background: white !important; border-color: #ddd !important; }
+      .section-head{ background: #f5f5f5 !important; }
+      .chip{ background: #f4f4f4 !important; }
+      a{ color:#0645ad; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Project Feasibility • Local Jobs Marketplace</span>
+      <h1>Cloud-Based Employment Marketplace (Local “Odd Jobs” Focus)</h1>
+      <p class="subtitle">
+        Feasibility write-up for a profile-driven platform connecting employers posting small local jobs
+        (mowing lawns, tree trimming, basic handyman work) with job seekers who advertise availability, skills,
+        and work preferences—plus optional messaging, ratings, and promoted visibility.
+      </p>
+
+      <div class="quick">
+        <span class="chip"><strong>MVP Focus:</strong> Profiles + Job Listings + Browse/Search</span>
+        <span class="chip"><strong>Team Note:</strong> We will rely heavily on AI for development</span>
+        <span class="chip"><strong>Timeline:</strong> ~8 weeks (one semester)</span>
+      </div>
+    </header>
+
+    <nav>
+      <p class="label">Jump to section</p>
+      <div class="links">
+        <a href="#s1">1. Project Idea</a>
+        <a href="#s2">2. Main Features</a>
+        <a href="#s3">3. Users & Use Cases</a>
+        <a href="#s4">4. Market Feasibility</a>
+        <a href="#s5">5. Tools & Skills</a>
+        <a href="#s6">6. Time & Schedule</a>
+        <a href="#s7">7. Challenges & Solutions</a>
+        <a href="#s8">8. Conclusion</a>
+      </div>
+    </nav>
+
+    <main>
+      <!-- 1 -->
+      <section id="s1">
+        <div class="section-head">
+          <div class="num">1</div>
+          <div>
+            <h2>Project Idea</h2>
+            <div class="muted">What we are building and why it matters</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <p>
+            This project is a cloud-based employment marketplace that connects people who are hiring with people who are
+            looking for work through a simple, profile-driven platform. It is intended to start small with local,
+            short-term jobs such as mowing lawns, tree trimming, and basic handyman work. Employers can post job listings
+            and manage interested candidates, while job seekers can create an “available for hire” profile that shows
+            their skills, work preferences, and a public-facing page. The platform also supports secure in-app messaging
+            so users can connect without sharing personal contact information right away.
+          </p>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section id="s2">
+        <div class="section-head">
+          <div class="num">2</div>
+          <div>
+            <h2>Main Features (Requirements)</h2>
+            <div class="muted">Core capabilities the system must support</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <ul>
+            <li>Users can create an account and log in.</li>
+            <li>Users can create a profile page.</li>
+            <li>Job seekers can mark themselves as “available for hire” and list skills and work preferences.</li>
+            <li>Employers can create a job listing with a title, requirements, and pay.</li>
+            <li>Users can browse and search job listings and available workers.</li>
+            <li>Employers can view who is interested in a job (basic “apply/interest” function).</li>
+            <li>Users can message each other through basic in-app messaging (simple version).</li>
+            <li>Users can leave ratings after a job is completed (basic rating system).</li>
+            <li>Optional: users can pay to promote a listing/profile (can start as a “promoted” tag only for the demo).</li>
+          </ul>
+          <div class="callout">
+            <strong>MVP strategy:</strong> Build job listings + profiles + browse/search first. Add messaging/ratings only if the core flow is stable.
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section id="s3">
+        <div class="section-head">
+          <div class="num">3</div>
+          <div>
+            <h2>Users and Use Cases</h2>
+            <div class="muted">Who uses it and how it works in practice</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Main Users</h3>
+              <p>Local employers (homeowners, small businesses) and local workers (students, part-time workers, freelancers).</p>
+            </div>
+            <div class="card">
+              <h3>Example Use</h3>
+              <p>
+                A homeowner posts “Trim two backyard trees,” adds requirements (“bring ladder and trimmer”), and sets pay to
+                “$80 fixed.” A job seeker searches local listings, applies, and messages to confirm timing and details.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section id="s4">
+        <div class="section-head">
+          <div class="num">4</div>
+          <div>
+            <h2>Market Feasibility / Competitor Analysis</h2>
+            <div class="muted">Where this fits and what differentiates it</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Existing Tools</h3>
+              <p class="muted">Common options people already use:</p>
+              <ul>
+                <li>Facebook Marketplace / local Facebook groups</li>
+                <li>Craigslist</li>
+                <li>Nextdoor</li>
+                <li>Fiverr / Upwork (more remote-focused)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>What They Do Well</h3>
+              <p class="muted">Strengths we can learn from:</p>
+              <ul>
+                <li>Large user bases</li>
+                <li>Posting is usually easy</li>
+                <li>Some have built-in messaging</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>What’s Missing</h3>
+              <ul>
+                <li>Structured, consistent job fields (pay, requirements, availability)</li>
+                <li>Clear “hire-ready” profiles for quick local jobs</li>
+                <li>Simple trust signals (ratings) integrated with listings</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Why Our App is Better</h3>
+              <ul>
+                <li>Designed specifically for fast local jobs (not broad classifieds)</li>
+                <li>Searchable skills + availability</li>
+                <li>Basic ratings to reduce wasted time and improve reliability</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section id="s5">
+        <div class="section-head">
+          <div class="num">5</div>
+          <div>
+            <h2>Tools & Skills Needed</h2>
+            <div class="muted">Tech stack and learning plan</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Frontend</h3>
+              <p>HTML, CSS, JavaScript (forms, pages, search/filter UI).</p>
+            </div>
+            <div class="card">
+              <h3>Backend / Database</h3>
+              <p>Node.js + Express with a database like Firebase or MongoDB for users, listings, messages, and ratings.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Hosting</h3>
+              <p>Frontend: Netlify or Vercel. Backend: Render or Railway (or similar Node hosting).</p>
+            </div>
+            <div class="card">
+              <h3>Skills & Approach</h3>
+              <p>
+                We have basic web development knowledge but are not advanced in coding. We will rely heavily on AI to
+                generate code, explain errors, and guide setup. We will keep scope realistic and build an MVP first.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section id="s6">
+        <div class="section-head">
+          <div class="num">6</div>
+          <div>
+            <h2>Time & Schedule</h2>
+            <div class="muted">A semester-friendly plan</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <ul>
+            <li><strong>Plan & Design:</strong> 1–2 weeks (finalize features, simple wireframes, data fields).</li>
+            <li><strong>Build Core Pages:</strong> 2 weeks (login, profile page, create listing page, browse listings page).</li>
+            <li><strong>Backend + Data Storage:</strong> 2 weeks (basic API routes, saving and retrieving listings).</li>
+            <li><strong>Add Core Features:</strong> 2 weeks (search, apply/interest, basic messaging).</li>
+            <li><strong>Test & Present:</strong> 1–2 weeks (fix bugs, polish UI, demo flows).</li>
+            <li><strong>Total:</strong> ~8 weeks (one semester).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section id="s7">
+        <div class="section-head">
+          <div class="num">7</div>
+          <div>
+            <h2>Challenges & Solutions</h2>
+            <div class="muted">Risks and mitigation strategies</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Challenge: Limited coding experience (AI dependence)</h3>
+              <p>We are not highly experienced and will rely heavily on AI for most of the development.</p>
+            </div>
+            <div class="card">
+              <h3>Solution</h3>
+              <p>
+                Keep scope small, build in steps, and test each feature (create listing, view listing, search listings).
+                Use AI for debugging support and document what we build and why.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Challenge: Authentication + database setup</h3>
+              <p>Configuring accounts and data storage correctly can be confusing.</p>
+            </div>
+            <div class="card">
+              <h3>Solution</h3>
+              <p>
+                Use a beginner-friendly approach (Firebase auth or simplified login for demo),
+                follow step-by-step tutorials, and start with user IDs if needed.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Challenge: Messaging and ratings complexity</h3>
+              <p>Messaging systems can expand quickly and cause scope creep.</p>
+            </div>
+            <div class="card">
+              <h3>Solution</h3>
+              <p>
+                Start with a basic system (one thread per job, plain text only) and a simple rating (1–5 stars).
+                If needed, implement these last.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3>Challenge: Time management</h3>
+              <p>Balancing workloads across other classes and coordinating as a group.</p>
+            </div>
+            <div class="card">
+              <h3>Solution</h3>
+              <p>
+                Divide tasks clearly (UI pages, backend routes, database setup, testing) and do short check-ins.
+                Prioritize MVP completion before extras.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section id="s8">
+        <div class="section-head">
+          <div class="num">8</div>
+          <div>
+            <h2>Conclusion</h2>
+            <div class="muted">Feasibility verdict</div>
+          </div>
+        </div>
+        <div class="section-body">
+          <p>
+            Yes, this project is feasible if we focus on a Minimum Viable Product first. The MVP will include accounts,
+            profiles, job listings (title, requirements, pay), browsing/searching, and a basic way to show interest in a job.
+            If time allows, we will add simple messaging and a basic rating system. This project is worth doing because it
+            solves a real local need, and it gives us hands-on experience building a realistic web application with both
+            frontend and backend components while learning with AI support.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Tip: Use your browser’s Print feature to export to PDF if your class allows it.
+    </footer>
+  </div>
+
+  <button class="print" onclick="window.print()">Print / Save as PDF</button>
+</body>
+</html>
