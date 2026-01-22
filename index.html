@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigConnect | Employment Marketplace</title>
+    <script src="hustle.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Gig<span>Connect</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" id="viewListings">Browse Jobs</a></li>
+                <li><button id="loginBtn" class="btn-secondary">Login</button></li>
+                <li><button id="signupBtn" class="btn-primary">Join Now</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="mainContent">
+        <section class="hero">
+            <h1>The simple way to get <span class="highlight">things done.</span></h1>
+            <p>A cloud-based marketplace for local help—from lawn care to tree trimming.</p>
+            <div class="hero-search">
+                <input type="text" placeholder="What service do you need?">
+                <button class="btn-primary" onclick="document.getElementById('viewListings').click()">Search</button>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="card">
+                <h3>Built-in Trust</h3>
+                <p>Verified ratings for every employer and seeker to ensure reliability.</p>
+            </div>
+            <div class="card">
+                <h3>Secure Messaging</h3>
+                <p>Connect and set expectations without sharing personal contact info.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContainer">
+                </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
